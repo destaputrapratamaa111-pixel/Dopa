@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Ghost Panel</title>
+<style>
+body{font-family:monospace;background:#111;color:#0f0;text-align:center}
+button{width:200px;height:60px;margin:10px;font-size:18px;background:#f00;color:#fff;border:none;cursor:pointer}
+#stat{margin-top:10px}
+</style>
+</head>
+<body>
+<h2>Ghost TikTok Prank</h2>
+<button id="start">START 👻</button>
+<button id="stop">STOP</button>
+<div id="stat">Status: idle</div>
+
+<script>
+let loop;
+const spam=["👻","🔥","NOIR WAS HERE","💀","🖤"];
+let cnt=0;
+
+function start(){
+  loop=setInterval(()=>{
+    const like=document.querySelector('[data-e2e="like-button"]')||document.querySelector('.css-1if2uwl-DivLikeBtnIcon');
+    const chat=document.querySelector('div[contenteditable="plaintext-only"]');
+    if(like) like.click();
+    if(chat){
+      chat.textContent=spam[cnt%spam.length];
+      chat.dispatchEvent(new Event('input',{bubbles:true}));
+      chat.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true}));
+      cnt++;
+      document.getElementById('stat').textContent='Terkirim: '+cnt;
+    }
+  },450);
+}
+function stop(){clearInterval(loop); document.getElementById('stat').textContent='idle';}
+document.getElementById('start').onclick=start;
+document.getElementById('stop').onclick=stop;
+</script>
+</body>
+</html>
